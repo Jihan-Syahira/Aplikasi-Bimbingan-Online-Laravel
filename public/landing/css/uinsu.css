@@ -1,0 +1,309 @@
+.site-header {
+    margin-top: 80px;
+}
+.headerone .bottom-header {
+    position: relative;
+    padding: 25px 0;
+    background: #fff;
+    border-bottom: 1px solid #f5f5f5;
+    z-index: 9;
+    box-shadow: none;
+}
+
+.headerone .is-sticky .bottom-header {
+    padding: 5px 0;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 30px;
+}
+
+.headerone .bottom-header .contact-info {
+    width: 75%;
+    text-align: right;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch ul li h4 {
+    text-align: left;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch i,
+.headerone .bottom-header .contact-info .quickcontact .get-tuch ul {
+    display: inline-block;
+    margin: 0 2px;
+    vertical-align: middle;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch ul li h4 {
+    margin-bottom: 0;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch ul li p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.headerone .bottom-header .contact-info .quickcontact .get-tuch i {
+    font-size: 42px;
+    color: #004a8d;
+    margin-right: 8px;
+}
+.headerone .nav-menu .box-header-nav:after,
+.headerone .nav-menu .box-header-nav:before {
+    display: none;
+}
+.headerone .bottom-header,
+.sticky-wrapper.is-sticky .bottom-header {
+    background-image: linear-gradient(
+            135deg,
+            transparent 0%,
+            transparent 38%,
+            rgba(54, 174, 62, 0.41) 38%,
+            rgba(54, 174, 62, 0.41) 62%,
+            transparent 62%,
+            transparent 64%,
+            rgba(32, 147, 51, 0.44) 64%,
+            rgba(32, 147, 51, 0.44) 100%
+        ),
+        linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent 56%,
+            rgb(64, 197, 116) 56%,
+            rgb(64, 197, 116) 64%,
+            rgb(0, 65, 12) 64%,
+            rgb(0, 65, 12) 91%,
+            transparent 91%,
+            transparent 100%
+        ),
+        linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255));
+}
+@media only screen and (max-width: 767px) {
+    .fullscreen-video {
+        height: 50vh !important;
+    }
+    .headerone .bottom-header,
+    .sticky-wrapper.is-sticky .bottom-header {
+        z-index: 1000 !important;
+        background-image: linear-gradient(
+                135deg,
+                transparent 0%,
+                transparent 38%,
+                rgba(54, 174, 62, 0.41) 38%,
+                rgba(54, 174, 62, 0.41) 62%,
+                transparent 62%,
+                transparent 64%,
+                rgba(32, 147, 51, 0.44) 64%,
+                rgba(32, 147, 51, 0.44) 100%
+            ),
+            linear-gradient(
+                45deg,
+                transparent 0%,
+                transparent 56%,
+                rgb(64, 197, 116) 56%,
+                rgb(64, 197, 116) 64%,
+                rgb(0, 65, 12) 64%,
+                rgb(0, 65, 12) 91%,
+                transparent 91%,
+                transparent 100%
+            ),
+            linear-gradient(90deg, rgb(255, 255, 255), rgb(255, 255, 255));
+    }
+}
+
+.ed-about-us {
+    position: relative;
+}
+
+.ed-about-us.layout-1 {
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: cover;
+    padding: 0;
+}
+
+.ed-about-us .ed-about-content {
+    width: 55%;
+    position: relative;
+    padding: 35px 0;
+    float: right;
+}
+
+.ed-about-us.layout-2 .ed-about-image {
+    padding: 35px 0;
+}
+
+.ed-about-us .ed-about-content .listing {
+    margin-bottom: 25px;
+    display: table;
+}
+
+.ed-about-us .ed-about-content .listing:last-child {
+    margin-bottom: 0;
+}
+
+.ed-about-us .ed-about-content .listing .icon-holder,
+.ed-about-us .ed-about-content .listing .text-holder {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.ed-about-us .ed-about-content .listing .icon-holder {
+    font-size: 32px;
+    background: #004a8d;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    margin-bottom: 15px;
+    color: #fdfdfd;
+}
+
+.ed-about-us .ed-about-content .listing .text-holder {
+    padding-left: 15px;
+}
+
+.ed-about-us .ed-about-content .listing .text-holder h3 {
+    font-weight: 400;
+    font-size: 24px;
+    text-transform: capitalize;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.ed-about-us .ed-about-content .listing .text-holder h3 a {
+    color: #004a8d;
+}
+
+/*=================================
+layout 2
+=================================*/
+
+.ed-about-us.layout-2 {
+    padding: 0;
+}
+
+.ed-about-us.layout-2 .container {
+    position: relative;
+}
+
+.ed-about-us.layout-2 .ed-about-content {
+    position: relative;
+    float: left;
+    padding-left: 0;
+    padding-right: 0;
+    width: 60%;
+}
+
+.ed-about-us.layout-2 .ed-about-image {
+    position: relative;
+    float: right;
+    width: 35%;
+    right: 0;
+    bottom: 0;
+}
+
+.ed-about-us.layout-2 .full-width .ed-about-image,
+.ed-about-us.layout-2 .full-width .ed-about-content {
+    width: 100%;
+}
+h2.section-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 34px;
+    position: relative;
+    color: #333;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+h2.section-header:before,
+h2.section-header:after {
+    content: "";
+    position: absolute;
+}
+@media only screen and (max-width: 480px) {
+    h2.section-header:before {
+        background: #333;
+        width: 10px;
+        height: 10px;
+        bottom: -10px;
+        left: 135px;
+    }
+}
+.ed-header.layout-2 h2.section-header:before {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 99;
+    border: 5px solid #fff;
+    bottom: -15px;
+}
+h2.section-header:before {
+    background: #333;
+    width: 20px;
+    height: 20px;
+    bottom: -10px;
+    left: 160px;
+}
+
+.ed-header.layout-2 h2.section-header:after {
+    right: 0;
+    margin: 0 auto;
+}
+
+h2.section-header:after {
+    background: #004A8D;
+    width: 150px;
+    left: 0;
+    height: 1px;
+    bottom: -5px;
+}
+
+
+.top-section-seperator svg {
+    fill: rgba(17, 110, 60, 1);
+}
+.ed-header.layout-2 {
+    text-align: center;
+    margin: 0 auto 40px;
+}
+.ed-header {
+    margin-bottom: 35px;
+    font-size: 18px;
+    max-width: 800px;
+    width: 100%;
+}
+summary {
+    font-size: 1.5rem;
+    color: green;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+details > summary:first-of-type {
+    background-image: none;
+    list-style: none;
+    -webkit-appearance: none;
+}
+blockquote {
+    font-family: "Pacifico", cursive;
+    color: #333;
+    border: none;
+    padding: 15px 0px 15px 20px;
+    margin-bottom: 12px;
+    margin: 15px 0;
+    background: rgba(204, 204, 204, 0.07058823529411765);
+}
+.wp-block-quote {
+    border-left: 0.25em solid;
+    margin: 0 0 1.75em;
+    padding-left: 1em;
+}
+.bottom-section-seperator.svg-big-triangle-center-wrap svg {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.bottom-section-seperator svg {
+    fill: rgba(17, 110, 60, 1);
+}

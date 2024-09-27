@@ -1,0 +1,1 @@
+{"short_name":"EL-UINSU","prefer_related_applications":true,"icons":[{"sizes":"144x144","type":"image\/png","src":"https:\/\/elearning.uinsu.ac.id\/admin\/tool\/mobile\/pix\/icon_144.png"}],"related_applications":[{"platform":"play","id":"com.moodle.moodlemobile"}]}
