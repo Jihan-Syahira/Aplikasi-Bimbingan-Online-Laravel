@@ -126,6 +126,7 @@ Route::GET('/dosen/profile', [App\Http\Controllers\LoginDosen::class, 'profile']
 Route::GET('/dosen/data/bimbingan/kerja_praktik/riwayat/{id}', [App\Http\Controllers\DosenKPController::class, 'detail']);
 Route::GET('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}', [App\Http\Controllers\DosenPengajuanController::class, 'detail']);
 Route::GET('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}', [App\Http\Controllers\DosenTAController::class, 'detail']);
+Route::GET('/dosen/mahasiswa/riwayat/{id}', [App\Http\Controllers\DosenBimbinganController::class, 'detail']);
 
 //STORE
 Route::POST('/dosen/jadwal/save', [App\Http\Controllers\DosenJadwalController::class, 'store']);
@@ -148,6 +149,8 @@ Route::get('/dosen/data/bimbingan/pengajuan_judul/json', [App\Http\Controllers\D
 Route::get('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}/json', [App\Http\Controllers\DosenPengajuanController::class, 'd_json']);
 Route::get('/dosen/data/bimbingan/tugas_akhir/json', [App\Http\Controllers\DosenTAController::class, 'json']);
 Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/json', [App\Http\Controllers\DosenTAController::class, 'd_json']);
+Route::get('/dosen/mahasiswa/json', [App\Http\Controllers\DosenBimbinganController::class, 'json']);
+Route::get('/dosen/mahasiswa/riwayat/{id}/json', [App\Http\Controllers\DosenBimbinganController::class, 'd_json']);
 
 //FIND
 Route::get('/dosen/jadwal/find/{id}', [App\Http\Controllers\DosenJadwalController::class, 'find']);

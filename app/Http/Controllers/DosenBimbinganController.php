@@ -33,6 +33,15 @@ class DosenBimbinganController extends Controller
      */
 
 
+    public function detail($id)
+    {
+        $load = Bimbingan::find($id);
+        $this->data['page'] = 'dosen/mahasiswa/riwayat/'.$id;
+        $this->data['title'] = 'Riwayat bimbingan Mahasiswa';
+        $this->data['load'] = $load;
+        return view('dosen/mahasiswa/detail', $this->data);
+    }
+
     public function update(Request $request, $id, $od)
     {
         $data = [
@@ -50,18 +59,12 @@ class DosenBimbinganController extends Controller
     public function json()
     {
         $dosen = Dosen::select('*')->where('id_user', Auth::user()->id)->first();
-        $bimbingan = Bimbingan::select('id')->where('kategori', 'TA')->where('id_dosen', $dosen->id)->get()->toArray();
-        $data = BimbinganDetail::select('*')
-            ->whereIn('id_bimbingan', $bimbingan)
-            ->where('tanggal', date('Y-m-d'))
-            ->orderBy('created_at', 'ASC')
-            ->get();
-        $no = 1;
+
+        $data = Bimbingan::select('*')->where('id_dosen', $dosen->id)->get();
         foreach ($data as $row) {
-            $row->antrian = $no++;
-            $row->judul = $row->cari_bimbingan->judul;
-            $row->mahasiswa = $row->cari_bimbingan->cari_mahasiswa->nama;
+            $row->mahasiswa = $row->cari_mahasiswa->nama;
         }
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -69,9 +72,8 @@ class DosenBimbinganController extends Controller
 
     public function d_json($id)
     {
-        $bimbingan = BimbinganDetail::find($id);
         $data = BimbinganDetail::select('*')
-            ->where('id_bimbingan', $bimbingan->id_bimbingan)
+            ->where('id_bimbingan', $id)
             ->orderBy('tanggal', 'ASC')
             ->get();
 

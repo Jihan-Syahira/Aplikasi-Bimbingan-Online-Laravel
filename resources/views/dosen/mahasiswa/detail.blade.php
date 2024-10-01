@@ -1,10 +1,10 @@
 @extends('template.master')
 @section('content')
 <div class="row">
-  <div class="col-lg-12 grid-margin stretch-card flex-column">
-    <div class="card mb-4">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
       <div class="card-body">
-        <h3 class="card-title">{{$title}} {{$load->cari_bimbingan->cari_mahasiswa->nama}}<br>Judul : {{$load->cari_bimbingan->judul}}</h3>
+        <h3 class="card-title">{{$title}} <br> <br>Mahasiswa : {{$load->cari_mahasiswa->nama}}<br>Judul : {{$load->judul}}</h3>
         <div class="table-responsive pt-1">
           <table class="display table table-bordered table-hover" id="data-width" width="100%">
             <thead class="text-center">
@@ -13,23 +13,10 @@
                 <th width="20%">Tanggal</th>
                 <th>Pembahasan</th>
                 <th>Status</th>
-                <th width="7%">Response</th>
               </tr>
             </thead>
             <tbody>
 
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">Lampiran</h3>
-        <div class="table-responsive pt-1">
-          <table class="display table table-bordered table-hover" id="data-lampiran" width="100%">
-            <tbody>
             </tbody>
           </table>
         </div>
@@ -68,13 +55,6 @@
                 {
                     data: 'paraf',
                     className: 'text-center',
-                },
-                {
-                    orderable: false,
-                    data: 'id_detail',
-                    className: 'text-center', render: function(data){
-                      return '<button type="button" class="btn  btn-comment" data-id="' + data + '"><i class="fa fa-comments-o text-behance"></i></button>';
-                    }
                 },
             ]
         });

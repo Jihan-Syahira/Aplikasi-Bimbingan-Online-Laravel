@@ -26,49 +26,7 @@
     </div>
   </div>
 </div>
-<!-- ============ MODAL DATA =============== -->
-<div class="modal fade" id="compose" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="justify-content-center modal-header">
-              <center><b>
-              <h4 class="modal-title" id="exampleModalLabel">Tambah Data</h4></b></center>    
-          </div>
-          <form action="#" method="POST" id="compose-form" class="form-horizontal" enctype="multipart/form-data">
-              @csrf
-              <div class="modal-body"> 
-                  <div class="form-group row">
-                      <label class="col-sm-4">Tanggal</label>
-                      <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control" readonly>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <label class="col-sm-4">Pembahasan</label>
-                      <div class="col-sm-8">
-                        <textarea name="keterangan" placeholder="contoh : Perbaiki Penulisan" class="form-control" required></textarea>
-                      </div>
-                  </div>
-                  <div class="form-group row">
-                      <label class="col-sm-4">Validasi</label>
-                      <div class="col-sm-8">
-                        <select name="paraf" class="form-control p-0 px-2" required>
-                          <option value="Menunggu">Menunggu</option>
-                          <option value="Bimbingan">Sudah Bimbingan</option>
-                          <option value="Ditolak">Batal Bimbingan</option>
-                        </select>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="reset" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary btn-simpan">Simpan</button>
-              </div>
-          </form>
-      </div>
-  </div>
-</div>
-<!--- END MODAL DATA --->
+
 @endsection
 
 @section('custom_script')
@@ -102,17 +60,16 @@
                     className: 'text-justify'
                 },
                 {
-                    data: 'paraf',
+                    data: 'status',
                     className: 'text-center'
                 },
                 {
-                    data: 'id_detail',
+                    data: 'id',
                     className: 'text-center',
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return '<button type="button" class="btn btn-info btn-eye" data-id="' + data + '"><i class="fa fa-eye"></i></button>\
-                        <button type="button" class="btn btn-success btn-edit" data-id="' + data + '"><i class="fa fa-edit"></i></button>';
+                        return '<button type="button" class="btn btn-info btn-eye" data-id="' + data + '"><i class="fa fa-eye"></i></button>';
                     }
                 },
             ]

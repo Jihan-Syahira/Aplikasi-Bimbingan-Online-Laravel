@@ -80,7 +80,7 @@
         </ul>
       </div>
     </li>
-    <li class="nav-item {{ (request()->is('dosen/mahasiswa')) ? 'active' : '' }}">
+    <li class="nav-item {{ (request()->is('dosen/mahasiswa')) ? 'active' : '' }}{{ (request()->is('dosen/mahasiswa/*')) ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('dosen.mahasiswa')}}">
         <i class="menu-icon mdi mdi-account-group"></i>
         <span class="menu-title">Mahasiswa Bimbingan</span>
