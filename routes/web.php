@@ -130,6 +130,7 @@ Route::GET('/dosen/mahasiswa/riwayat/{id}', [App\Http\Controllers\DosenBimbingan
 
 //STORE
 Route::POST('/dosen/jadwal/save', [App\Http\Controllers\DosenJadwalController::class, 'store']);
+Route::POST('/dosen/data/bimbingan/kerja_praktik/komentar/save', [App\Http\Controllers\DosenKPController::class, 'store_komentar']);
 
 //UPDATE
 Route::POST('/dosen/jadwal/update/{id}', [App\Http\Controllers\DosenJadwalController::class, 'update']);
@@ -149,6 +150,9 @@ Route::get('/dosen/data/bimbingan/pengajuan_judul/json', [App\Http\Controllers\D
 Route::get('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}/json', [App\Http\Controllers\DosenPengajuanController::class, 'd_json']);
 Route::get('/dosen/data/bimbingan/tugas_akhir/json', [App\Http\Controllers\DosenTAController::class, 'json']);
 Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/json', [App\Http\Controllers\DosenTAController::class, 'd_json']);
+
+Route::POST('/dosen/data/bimbingan/kerja_praktik/komentar/find/{od}', [App\Http\Controllers\DosenKPController::class, 'find_komentar']);
+
 Route::get('/dosen/mahasiswa/json', [App\Http\Controllers\DosenBimbinganController::class, 'json']);
 Route::get('/dosen/mahasiswa/riwayat/{id}/json', [App\Http\Controllers\DosenBimbinganController::class, 'd_json']);
 

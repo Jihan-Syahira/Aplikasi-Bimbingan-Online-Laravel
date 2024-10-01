@@ -12,6 +12,8 @@ use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
+use App\Models\Komentar;
+use App\Models\Lampiran;
 use App\Models\Mahasiswa;
 
 class DosenTAController extends Controller

@@ -33,3 +33,6 @@
             transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         }
     </style>
+    <x-head.tinymce-config/>
+    
+    </script>>

@@ -6,11 +6,12 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
-
 use App\Models\User;
 use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
 use App\Models\Dosen;
+use App\Models\Komentar;
+use App\Models\Lampiran;
 use App\Models\JadwalDosen;
 use App\Models\Mahasiswa;
 
@@ -66,7 +67,7 @@ class DosenPengajuanController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
         $no = 1;
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->antrian = $no++;
             $row->judul = $row->cari_bimbingan->judul;
             $row->mahasiswa = $row->cari_bimbingan->cari_mahasiswa->nama;
@@ -94,5 +95,34 @@ class DosenPengajuanController extends Controller
         $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
 
         return json_encode(array('data' => $data));
+    }
+
+    //Komentar
+    public function store_komentar(Request $request, $id)
+    {
+        $data = [
+            'id_detail' => $id,
+            'user_id' => Auth::user()->id,
+            'content' => $request->content
+        ];
+
+        Komentar::create($data);
+
+        return redirect(url('/dosen/data/bimbingan/pengajuan_judul/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+    }
+
+    public function update_komentar(Request $request, $id, $od)
+    {
+        $data = [
+            'id_detail' => $od,
+            'user_id' => Auth::user()->id,
+            'content' => $request->content
+        ];
+
+        $rows = Komentar::find($od);
+
+        $rows->update($data);
+
+        return redirect(url('/dosen/data/bimbingan/pengajuan_judul/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
 }
