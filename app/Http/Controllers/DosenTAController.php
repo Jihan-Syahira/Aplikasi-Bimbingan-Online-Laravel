@@ -6,7 +6,6 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
-
 use App\Models\User;
 use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
@@ -41,7 +40,7 @@ class DosenTAController extends Controller
         $this->data['page'] = 'dosen/data/bimbingan/tugas_akhir/riwayat/'.$id;
         $this->data['title'] = 'Riwayat bimbingan';
         $this->data['load'] = $load;
-        return view('dosen/bimbingan/detail/kp', $this->data);
+        return view('dosen/bimbingan/detail/index', $this->data);
     }
 
     public function update(Request $request, $id, $od)
@@ -68,7 +67,7 @@ class DosenTAController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
         $no = 1;
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->antrian = $no++;
             $row->judul = $row->cari_bimbingan->judul;
             $row->mahasiswa = $row->cari_bimbingan->cari_mahasiswa->nama;
@@ -91,10 +90,98 @@ class DosenTAController extends Controller
             ->make(true);
     }
 
+    public function komentar_json($id, $od)
+    {
+        $data = Komentar::select('*')
+            ->where('id_detail', $od)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function lampiran_json($id)
+    {
+        $data = Lampiran::select('*')
+            ->where('id_bimbingan', $id)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function find($od)
     {
         $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
 
         return json_encode(array('data' => $data));
+    }
+
+    public function find_detail($id, $od)
+    {
+        $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
+
+        return json_encode(array('data' => $data));
+    }
+
+    //Komentar
+    public function store_komentar(Request $request)
+    {
+        $data = [
+            'id_detail' => $request->id_detail,
+            'user_id' => Auth::user()->id,
+            'content' => $request->content
+        ];
+        $id = BimbinganDetail::find($request->id_detail);
+
+        Komentar::create($data);
+
+        return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+    }
+
+
+    public function find_komentar($od)
+    {
+        $data = Komentar::select('*')->where('id', $od)->get();
+
+        return json_encode(array('data' => $data));
+    }
+
+    //Upload File
+    public function upload_file(Request $request)
+    {
+        $file = $request->file('upload');
+        if (isset($file)) {
+            $ext = '.' . $file->getClientOriginalExtension();
+            $filename =  rand(1001, 9999).'-'.$request->judul . $ext;
+            $this->lampiran_destroy($filename);
+            $file->storeAs('/', $filename, ['disk' => 'file_upload']);
+
+            $data = [
+                'id_bimbingan'  => $request->id_detail,
+                'user_id' => Auth::user()->id,
+                'file_path' => $filename
+            ];
+
+            Lampiran::create($data);
+
+            $id = BimbinganDetail::find($request->id_detail);
+
+            return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+
+        } else {
+            return '<script>alert("Cek Form!");history.back();</script>';
+        }
+
     }
 }

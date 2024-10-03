@@ -28,6 +28,16 @@
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
+      @if(Auth::user()->level == 'Mahasiswa')
+      <li id="alertsDropdown" class="nav-item dropdown" >
+        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+          <i class="mdi mdi-bell-outline"></i>
+          <span id="badge-counter" class="badge-counter"></span>
+        </a>
+        <div id="alertsDropdownList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificationDropdown"  style="min-width: 350px;">
+        </div>
+      </li>
+      @endif
       <li class="nav-item dropdown d-none d-xl-inline-block">
         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
           <span class="profile-text d-none d-md-inline-flex">{{Auth::user()->name}}</span>

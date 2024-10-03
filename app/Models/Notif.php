@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lampiran extends Model
+class Notif extends Model
 {
     use HasFactory;
-    protected $table = 'tb_lampiran';
+    protected $table = 'notif';
     protected $primaryKey = 'id';
-    protected $fillable = ['id_bimbingan','user_id','judul','file_path'];
+    protected $fillable = ['judul','status','icon','color','id_user','id_bimbingan'];
 
     public function cari_bimbingan()
     {
@@ -25,12 +25,9 @@ class Lampiran extends Model
 
     public function cari_user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id')->withDefault([
-            'name' => 'Akun tidak ditemukan',
-            'email' => 'Akun tidak ditemukan',
-            'level' => 'Akun tidak ditemukan',
-            'last_login' => 'Akun tidak ditemukan'
+        return $this->belongsTo('App\Models\User', 'id_user', 'id')->withDefault([
+            'name' => 'Anonim',
+            'email'  => 'Anonim'
         ]);
     }
-
 }

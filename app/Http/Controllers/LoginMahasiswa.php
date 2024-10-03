@@ -9,7 +9,6 @@ use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
 use App\Models\Mahasiswa;
-
 use Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -73,12 +72,18 @@ class LoginMahasiswa extends Controller
         return view('mahasiswa.bimbingan.kp', $this->data);
     }
 
-
     public function jadwal()
     {
         $this->data['page'] = 'mahasiswa/jadwal';
         $this->data['title'] = 'Data Jadwal Bimbingan';
         return view('mahasiswa.jadwal.index', $this->data);
+    }
+
+    public function history()
+    {
+        $this->data['page'] = 'mahasiswa/history';
+        $this->data['title'] = 'History Bimbingan';
+        return view('mahasiswa.history.index', $this->data);
     }
     //User
     public function profile()

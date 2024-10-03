@@ -271,14 +271,13 @@
     //Button Trigger
     $("body").on("click", ".btn-lampiran", function () {
         kosongkan();
-        jQuery("#compose-form-lampiran").attr("action", "{{route('add.file.kp')}}");
+        jQuery("#compose-form-lampiran").attr("action", "{{route($link_1)}}");
         jQuery("#compose-lampiran .modal-title").html("Upload File");
         jQuery("#compose-lampiran").modal("toggle");
     });
 
     $("body").on("click", ".btn-comment", function () {
         var id = jQuery(this).attr("data-id");
-        alert(id);
         $.ajax({
             url: "<?=url($page);?>/find/"+id,
             type: "GET",
@@ -296,7 +295,7 @@
         });
         
         table2.ajax.url('{{url("$page/json/komentar/")}}/'+id).load();
-        jQuery("#compose-form").attr("action", "{{route('add.komentar.kp')}}");
+        jQuery("#compose-form").attr("action", "{{route($link_2)}}");
         jQuery("#compose").modal("toggle");
     });
 

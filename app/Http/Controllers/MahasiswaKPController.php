@@ -6,13 +6,15 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
-
 use App\Models\User;
 use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
+use App\Models\Komentar;
+use App\Models\Lampiran;
 use App\Models\Mahasiswa;
+use File;
 
 class MahasiswaKPController extends Controller
 {
@@ -35,11 +37,14 @@ class MahasiswaKPController extends Controller
 
     public function detail($id)
     {
-        $load = Bimbingan::find($id);
+        $load = BimbinganDetail::find($id);
         $this->data['page'] = 'mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id;
         $this->data['title'] = 'Detail bimbingan';
         $this->data['load'] = $load;
-        return view('mahasiswa/bimbingan/detail/kp', $this->data);
+        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$load->id_bimbingan;
+        $this->data['link_1'] = 'add.lampiran.kp.mhs';
+        $this->data['link_2'] = 'add.komentar.kp.mhs';
+        return view('mahasiswa/bimbingan/detail/index', $this->data);
     }
 
     public function store(Request $request)
@@ -129,7 +134,7 @@ class MahasiswaKPController extends Controller
             ->orderBy('judul', 'ASC')
             ->get();
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->dosen = $row->cari_dosen->nama;
             $row->mahasiswa = $row->cari_mahasiswa->nama;
         }
@@ -163,4 +168,93 @@ class MahasiswaKPController extends Controller
 
         return json_encode(array('data' => $data));
     }
+    public function komentar_json($id)
+    {
+        $data = Komentar::select('*')
+            ->where('id_detail', $id)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function lampiran_json($id)
+    {
+        $data = Lampiran::select('*')
+            ->where('id_bimbingan', $id)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+
+    public function find_detail($id, $od)
+    {
+        $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
+
+        return json_encode(array('data' => $data));
+    }
+
+    //Komentar
+    public function store_komentar(Request $request)
+    {
+        $data = [
+            'id_detail' => $request->id_detail,
+            'user_id' => Auth::user()->id,
+            'content' => $request->content
+        ];
+        $id = BimbinganDetail::find($request->id_detail);
+
+        Komentar::create($data);
+
+        return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+    }
+
+
+    public function find_komentar($od)
+    {
+        $data = Komentar::select('*')->where('id', $od)->get();
+
+        return json_encode(array('data' => $data));
+    }
+
+    //Upload File
+    public function upload_file(Request $request)
+    {
+        $file = $request->file('upload');
+        if (isset($file)) {
+            $ext = '.' . $file->getClientOriginalExtension();
+            $filename = rand(1001, 9999).'-'. $request->judul . $ext;
+            $this->lampiran_destroy($filename);
+            $file->storeAs('/', $filename, ['disk' => 'file_upload']);
+
+            $data = [
+                'id_bimbingan'  => $request->id_detail,
+                'judul' => $request->judul,
+                'user_id' => Auth::user()->id,
+                'file_path' => $filename
+            ];
+
+            Lampiran::create($data);
+
+            $id = BimbinganDetail::find($request->id_detail);
+
+            return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+
+        } else {
+            return '<script>alert("Cek Form!");history.back();</script>';
+        }
+    }
+
 }

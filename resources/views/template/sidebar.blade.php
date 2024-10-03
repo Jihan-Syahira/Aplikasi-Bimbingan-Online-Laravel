@@ -125,8 +125,8 @@
         </ul>
       </div>
     </li>
-    <li class="nav-item {{ (request()->is('mahasiswa/jadwal')) ? 'active' : '' }}{{ (request()->is('mahasiswa/jadwal/*')) ? 'active' : '' }}">
-      <a class="nav-link" href="{{ route('mahasiswa.jadwal')}}">
+    <li class="nav-item {{ (request()->is('mahasiswa/history')) ? 'active' : '' }}{{ (request()->is('mahasiswa/jadwal/*')) ? 'active' : '' }}">
+      <a class="nav-link" href="{{ route('mahasiswa.history')}}">
         <i class="menu-icon mdi mdi-calendar"></i>
         <span class="menu-title">History Bimbingan</span>
       </a>

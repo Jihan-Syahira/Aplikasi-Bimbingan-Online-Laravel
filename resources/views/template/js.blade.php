@@ -129,4 +129,79 @@
 
         })
     </script>
-  
+  <script>
+    var renderAsHtml = function (data, type, full) {
+    return decHTMLifEnc(data);
+    }; 
+    var isEncHTML = function(str) {
+        if(str.search(/&amp;/g) != -1 || str.search(/&lt;/g) != -1 || str.search(/&gt;/g) != -1)
+            return true;
+        else
+            return false;
+    };
+    
+    var decHTMLifEnc = function(str){
+        if(isEncHTML(str))
+            return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+        return str;
+    }
+  </script>
+
+    @if(Auth::user()->level == 'Mahasiswa') 
+    <script type="text/javascript">
+        var count_notif = 0;
+        var current_notif = 1;
+        window.onload = function() { 
+            get_notif(); 
+        }
+       
+        function get_notif() {
+            $.ajax({
+                url: "<?=url('/robot/notif/get/');?>",
+                type: "GET",
+                cache: false,
+                dataType: 'json',
+                success: function (dataResult) { 
+                    console.log(dataResult);
+                    var resultData = dataResult.data;
+                    if(resultData.length > 0)
+                    {
+                        jQuery('#badge-counter').removeClass();
+                        jQuery('#badge-counter').addClass("count bg-success badge-counter");
+                        $("#notificationDropdown").attr('data-toggle','dropdown');
+                        $('#alertsDropdownList').html("");
+                        $('#alertsDropdownList').append('<a class="dropdown-item py-3 border-bottom">\
+                          <p class="mb-0 font-weight-medium float-left badge-counter-list">4 new notifications </p>\
+                          <span class="badge badge-pill badge-primary float-right btn-logs">View all</span>\
+                        </a>');
+                        $("#alertsDropdownList").prop('hidden',false);
+                        jQuery('.badge-counter').html(resultData.length);
+                        jQuery('.badge-counter-list').html(resultData.length+ ' new notification');
+                       
+                        $.each(resultData,function(index,row){
+                            $('#alertsDropdownList').append('<a class="dropdown-item preview-item py-3">\
+                                <div class="preview-thumbnail mr-2">\
+                                  <i class="mdi '+row.icon+' m-auto text-'+row.color+'"></i>\
+                                </div>\
+                                <div class="col-md-12 preview-item-content">\
+                                  <h6 class="preview-subject font-weight-normal text-dark mb-1">'+row.judul+'</h6>\
+                                  <p class="font-weight-light float-right small-text mx-3 mb-0">'+row.akun+' - '+row.waktu+' </p>\
+                                </div>\
+                              </a>'
+                            );
+                        })
+                    }else if(resultData.length === 0){
+                        jQuery('#badge-counter').removeClass();
+                        jQuery('#badge-counter').addClass("badge-counter");
+                        $("#notificationDropdown").removeAttr('data-toggle');
+                        $("#alertsDropdownList").prop('hidden',true);
+                        $('#alertsDropdownList').html("");
+                        jQuery('.badge-counter').html("");
+                    }
+                    current_notif = resultData.length;
+                }
+            });
+            //setTimeout('get_notif()', 5000);
+        }
+    </script>
+    @endif

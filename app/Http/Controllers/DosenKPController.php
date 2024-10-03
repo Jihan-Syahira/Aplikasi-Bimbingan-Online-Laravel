@@ -14,6 +14,7 @@ use App\Models\JadwalDosen;
 use App\Models\Komentar;
 use App\Models\Lampiran;
 use App\Models\Mahasiswa;
+use File;
 
 class DosenKPController extends Controller
 {
@@ -40,7 +41,10 @@ class DosenKPController extends Controller
         $this->data['page'] = 'dosen/data/bimbingan/kerja_praktik/riwayat/'.$id;
         $this->data['title'] = 'Riwayat bimbingan';
         $this->data['load'] = $load;
-        return view('dosen/bimbingan/detail/kp', $this->data);
+        $this->data['lampiran'] = 'dosen/data/bimbingan/kerja_praktik/riwayat/'.$load->id_bimbingan;
+        $this->data['link_1'] = 'add.lampiran.kp';
+        $this->data['link_2'] = 'add.komentar.kp';
+        return view('dosen/bimbingan/detail/index', $this->data);
     }
 
     public function update(Request $request, $id, $od)
@@ -54,7 +58,7 @@ class DosenKPController extends Controller
 
         $rows->update($data);
 
-        return redirect(url('/dosen/data/bimbingan/kerja_praktik/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+        return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
 
     public function json()
@@ -90,6 +94,36 @@ class DosenKPController extends Controller
             ->make(true);
     }
 
+    public function komentar_json($id, $od)
+    {
+        $data = Komentar::select('*')
+            ->where('id_detail', $od)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function lampiran_json($id)
+    {
+        $data = Lampiran::select('*')
+            ->where('id_bimbingan', $id)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        foreach ($data as $row) {
+            $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
+        }
+        return Datatables::of($data)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
     public function find($od)
     {
         $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
@@ -97,34 +131,30 @@ class DosenKPController extends Controller
         return json_encode(array('data' => $data));
     }
 
+    public function find_detail($id, $od)
+    {
+        $data = BimbinganDetail::select('*')->where('id_detail', $od)->get();
+
+        return json_encode(array('data' => $data));
+    }
+
     //Komentar
-    public function store_komentar(Request $request, $id)
+    public function store_komentar(Request $request)
     {
         $data = [
-            'id_detail' => $id,
+            'id_detail' => $request->id_detail,
             'user_id' => Auth::user()->id,
             'content' => $request->content
         ];
+        $id = BimbinganDetail::find($request->id_detail);
+        $this->buat_notif('Menambahkan Komentar pada '.strtolower($id->cari_bimbingan->judul), 'mdi-comment-multiple', 'primary', $id->id_bimbingan);
 
         Komentar::create($data);
 
-        return redirect(url('/dosen/data/bimbingan/kerja_praktik/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+
+        return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Komentar Berhasil!','info' => 'info'));
     }
 
-    public function update_komentar(Request $request, $id, $od)
-    {
-        $data = [
-            'id_detail' => $od,
-            'user_id' => Auth::user()->id,
-            'content' => $request->content
-        ];
-
-        $rows = Komentar::find($od);
-
-        $rows->update($data);
-
-        return redirect(url('/dosen/data/bimbingan/kerja_praktik/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
-    }
 
     public function find_komentar($od)
     {
@@ -132,4 +162,34 @@ class DosenKPController extends Controller
 
         return json_encode(array('data' => $data));
     }
+
+    //Upload File
+    public function upload_file(Request $request)
+    {
+        $file = $request->file('upload');
+        if (isset($file)) {
+            $ext = '.' . $file->getClientOriginalExtension();
+            $filename =  rand(1001, 9999).'-'.$request->judul . $ext;
+            $this->lampiran_destroy($filename);
+            $file->storeAs('/', $filename, ['disk' => 'file_upload']);
+
+            $data = [
+                'id_bimbingan'  => $request->id_detail,
+                'user_id' => Auth::user()->id,
+                'file_path' => $filename
+            ];
+
+            Lampiran::create($data);
+
+            $id = BimbinganDetail::find($request->id_detail);
+            $this->buat_notif('Menambahkan file pada '.strtolower($id->cari_bimbingan->judul), 'mdi-file-upload', 'danger', $id->id_bimbingan);
+
+            return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+
+        } else {
+            return '<script>alert("Cek Form!");history.back();</script>';
+        }
+
+    }
+
 }
