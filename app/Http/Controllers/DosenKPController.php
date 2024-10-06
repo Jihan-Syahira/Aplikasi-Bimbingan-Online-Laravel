@@ -47,7 +47,7 @@ class DosenKPController extends Controller
         return view('dosen/bimbingan/detail/index', $this->data);
     }
 
-    public function update(Request $request, $id, $od)
+    public function update(Request $request, $od)
     {
         $data = [
             'keterangan' => $request->keterangan,
@@ -55,10 +55,9 @@ class DosenKPController extends Controller
         ];
 
         $rows = BimbinganDetail::find($od);
-
         $rows->update($data);
 
-        return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+        return redirect(url('/dosen/data/bimbingan/kerja_praktik'))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
 
     public function json()

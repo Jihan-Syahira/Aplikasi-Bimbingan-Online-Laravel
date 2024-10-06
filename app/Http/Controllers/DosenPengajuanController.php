@@ -43,7 +43,7 @@ class DosenPengajuanController extends Controller
         return view('dosen/bimbingan/detail/index', $this->data);
     }
 
-    public function update(Request $request, $id, $od)
+    public function update(Request $request, $od)
     {
         $data = [
             'keterangan' => $request->keterangan,
@@ -54,7 +54,7 @@ class DosenPengajuanController extends Controller
 
         $rows->update($data);
 
-        return redirect(url('/dosen/data/bimbingan/pengajuan_judul/detail/'.$id))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+        return redirect(url('/dosen/data/bimbingan/pengajuan_judul'))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
 
     public function json()
