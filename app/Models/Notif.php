@@ -17,6 +17,7 @@ class Notif extends Model
         return $this->belongsTo('App\Models\Bimbingan', 'id_bimbingan', 'id')->withDefault([
             'judul' => 'Null ! Cek Data',
             'keterangan' => 'Null ! Cek Data',
+            'kategori' => 'Null ! Cek Data',
             'status' => 'Null ! Cek Data',
             'id_mahasiswa' => 'Null ! Cek Data',
             'id_dosen' => 'Null ! Cek Data'

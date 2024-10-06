@@ -128,6 +128,11 @@
             });
 
         })
+        
+        
+        $("body").on("click",".btn-logs",function(){
+            window.location.href = "{{route('users.logs')}}";
+        });
     </script>
   <script>
     var renderAsHtml = function (data, type, full) {

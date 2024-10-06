@@ -137,6 +137,12 @@
         <span class="menu-title">Jadwal Bimbingan</span>
       </a>
     </li>
+    <li class="nav-item {{ (request()->is('mahasiswa/logs')) ? 'active' : '' }}{{ (request()->is('mahasiswa/logs/*')) ? 'active' : '' }}">
+      <a class="nav-link" href="{{ url('mahasiswa/logs')}}">
+        <i class="menu-icon mdi mdi-refresh"></i>
+        <span class="menu-title">Log Aktivitas</span>
+      </a>
+    </li>
     <li class="nav-item {{ (request()->is('mahasiswa/profile')) ? 'active' : '' }}">
       <a class="nav-link" href="{{ route('mahasiswa.profile')}}">
         <i class="menu-icon mdi mdi-account"></i>

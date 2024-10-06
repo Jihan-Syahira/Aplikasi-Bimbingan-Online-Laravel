@@ -18,7 +18,9 @@ class Controller extends BaseController
     use ValidatesRequests;
 
     public $bulan = array('','Januari','Febuari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember');
-
+    public $hari = [
+        "","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu","Minggu"
+    ];
     public function buat_notif($title, $icon, $color, $idbimbingan)
     {
         $data = [

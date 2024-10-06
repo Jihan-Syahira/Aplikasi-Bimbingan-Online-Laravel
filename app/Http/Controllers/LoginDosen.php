@@ -97,6 +97,14 @@ class LoginDosen extends Controller
         $this->data['title'] = 'Data Hari Aktif Bimbingan';
         return view('dosen.jadwal.index', $this->data);
     }
+
+    public function logs()
+    {
+        $this->data['page'] = 'dosen/logs';
+        $this->data['title'] = 'Notifikasi';
+        return view('notifikasi', $this->data);
+    }
+
     //User
     public function profile()
     {

@@ -85,6 +85,14 @@ class LoginMahasiswa extends Controller
         $this->data['title'] = 'History Bimbingan';
         return view('mahasiswa.history.index', $this->data);
     }
+
+    public function logs()
+    {
+        $this->data['page'] = 'mahasiswa/logs';
+        $this->data['title'] = 'Notifikasi';
+
+        return view('notifikasi', $this->data);
+    }
     //User
     public function profile()
     {

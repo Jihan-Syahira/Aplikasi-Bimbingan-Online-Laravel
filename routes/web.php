@@ -248,3 +248,9 @@ Route::get('/mahasiswa/jadwal/tanggal/{id}', [App\Http\Controllers\MahasiswaJadw
 Route::get('/robot/notif/json/{id}', [App\Http\Controllers\NotifLoader::class, 'read']);
 Route::get('/robot/notif/get', [App\Http\Controllers\NotifLoader::class, 'get_notif']);
 Route::get('/robot/notif/test', [App\Http\Controllers\NotifLoader::class, 'test']);
+
+Route::get('/users/logs', [App\Http\Controllers\NotifLoader::class, 'logs'])->name('users.logs');
+Route::get('/mahasiswa/logs', [App\Http\Controllers\LoginMahasiswa::class, 'logs']);
+Route::get('/dosen/logs', [App\Http\Controllers\LoginDosen::class, 'logs']);
+Route::get('/users/notif/get', [App\Http\Controllers\NotifLoader::class, 'read_all']);
+Route::get('/users/bimbingan/find/{id}', [App\Http\Controllers\NotifLoader::class, 'cari_bimbingan']);
