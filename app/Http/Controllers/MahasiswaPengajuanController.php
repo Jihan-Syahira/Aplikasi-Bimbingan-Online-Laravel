@@ -6,7 +6,6 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
-
 use App\Models\User;
 use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
@@ -39,7 +38,9 @@ class MahasiswaPengajuanController extends Controller
         $this->data['page'] = 'mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$id;
         $this->data['title'] = 'Detail bimbingan';
         $this->data['load'] = $load;
-        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$load->id_bimbingan;
+        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$load->id;
+        $this->data['link_1'] = 'add.lampiran.pengajuan.mhs';
+        $this->data['link_2'] = 'add.komentar.pengajuan.mhs';
         return view('mahasiswa/bimbingan/detail/index', $this->data);
     }
 
@@ -130,7 +131,7 @@ class MahasiswaPengajuanController extends Controller
             ->orderBy('judul', 'ASC')
             ->get();
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->dosen = $row->cari_dosen->nama;
             $row->mahasiswa = $row->cari_mahasiswa->nama;
         }
@@ -164,12 +165,14 @@ class MahasiswaPengajuanController extends Controller
 
         return json_encode(array('data' => $data));
     }
-    public function komentar_json($id)
+
+    public function komentar_json($id, $od)
     {
         $data = Komentar::select('*')
-            ->where('id_detail', $id)
+            ->where('id_detail', $od)
             ->orderBy('created_at', 'ASC')
             ->get();
+
 
         foreach ($data as $row) {
             $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
@@ -236,7 +239,7 @@ class MahasiswaPengajuanController extends Controller
             $file->storeAs('/', $filename, ['disk' => 'file_upload']);
 
             $data = [
-                'id_bimbingan'  => $request->id_detail,
+                'id_bimbingan'  => $request->id_bimbingan,
                 'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
@@ -244,7 +247,7 @@ class MahasiswaPengajuanController extends Controller
 
             Lampiran::create($data);
 
-            $id = BimbinganDetail::find($request->id_detail);
+            $id = BimbinganDetail::find($request->id_bimbingan);
 
             return redirect(url('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
 

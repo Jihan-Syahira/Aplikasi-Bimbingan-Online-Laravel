@@ -38,7 +38,9 @@ class MahasiswaTAController extends Controller
         $this->data['page'] = 'mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$id;
         $this->data['title'] = 'Detail bimbingan';
         $this->data['load'] = $load;
-        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$load->id_bimbingan;
+        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$load->id;
+        $this->data['link_1'] = 'add.lampiran.ta.mhs';
+        $this->data['link_2'] = 'add.komentar.ta.mhs';
         return view('mahasiswa/bimbingan/detail/index', $this->data);
     }
 
@@ -163,12 +165,14 @@ class MahasiswaTAController extends Controller
 
         return json_encode(array('data' => $data));
     }
-    public function komentar_json($id)
+    
+    public function komentar_json($id, $od)
     {
         $data = Komentar::select('*')
-            ->where('id_detail', $id)
+            ->where('id_detail', $od)
             ->orderBy('created_at', 'ASC')
             ->get();
+
 
         foreach ($data as $row) {
             $row->username = $row->cari_user->name .'<br>'.date('d F Y h:i', strtotime($row->created_at));
@@ -235,7 +239,7 @@ class MahasiswaTAController extends Controller
             $file->storeAs('/', $filename, ['disk' => 'file_upload']);
 
             $data = [
-                'id_bimbingan'  => $request->id_detail,
+                'id_bimbingan'  => $request->id_bimbingan,
                 'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
@@ -243,9 +247,9 @@ class MahasiswaTAController extends Controller
 
             Lampiran::create($data);
 
-            $id = BimbinganDetail::find($request->id_detail);
+            $id = BimbinganDetail::find($request->id_bimbingan);
 
-            return redirect(url('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

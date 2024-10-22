@@ -37,11 +37,11 @@ class MahasiswaKPController extends Controller
 
     public function detail($id)
     {
-        $load = BimbinganDetail::find($id);
+        $load = Bimbingan::find($id);
         $this->data['page'] = 'mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id;
         $this->data['title'] = 'Detail bimbingan';
         $this->data['load'] = $load;
-        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$load->id_bimbingan;
+        $this->data['lampiran'] = 'mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$load->id;
         $this->data['link_1'] = 'add.lampiran.kp.mhs';
         $this->data['link_2'] = 'add.komentar.kp.mhs';
         return view('mahasiswa/bimbingan/detail/index', $this->data);
@@ -168,10 +168,11 @@ class MahasiswaKPController extends Controller
 
         return json_encode(array('data' => $data));
     }
-    public function komentar_json($id)
+    
+    public function komentar_json($id,$od)
     {
         $data = Komentar::select('*')
-            ->where('id_detail', $id)
+            ->where('id_detail', $od)
             ->orderBy('created_at', 'ASC')
             ->get();
 
@@ -240,7 +241,7 @@ class MahasiswaKPController extends Controller
             $file->storeAs('/', $filename, ['disk' => 'file_upload']);
 
             $data = [
-                'id_bimbingan'  => $request->id_detail,
+                'id_bimbingan'  => $request->id_bimbingan,
                 'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
@@ -248,9 +249,9 @@ class MahasiswaKPController extends Controller
 
             Lampiran::create($data);
 
-            $id = BimbinganDetail::find($request->id_detail);
+            $id = BimbinganDetail::find($request->id_bimbingan);
 
-            return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

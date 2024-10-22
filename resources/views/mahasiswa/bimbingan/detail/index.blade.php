@@ -1,9 +1,9 @@
 @extends('template.master') @section('content')
 <div class="row">
     <div class="col-lg-12 flex-column pl-4 mb-4 row">
-        <h5 class="">{{$load->cari_bimbingan->judul}}</h5>
+        <h5 class="">{{$load->judul}}</h5>
         <h6 class="text-muted">
-            {{$load->cari_bimbingan->cari_mahasiswa->nama}}
+            {{$load->cari_mahasiswa->nama}}
         </h6>
     </div>
 
@@ -98,7 +98,8 @@
                 enctype="multipart/form-data"
             >
                 @csrf
-                <input type="number" name="id_detail" hidden value="{{$load->id_detail}}"/>
+
+                <input type="text" id="id_detail" name="id_detail" style="display:none;"/>
 
                 <div class="modal-body">
                     <div class="form-group">
@@ -145,7 +146,7 @@
           <form action="#" method="POST" id="compose-form-lampiran" class="form-horizontal" enctype="multipart/form-data">
               @csrf
               
-              <input type="number" name="id_detail" hidden value="{{$load->id_detail}}"/>
+              <input type="number" name="id_bimbingan" hidden value="{{$load->id}}"/>
               <div class="modal-body"> 
                   <div class="form-group row">
                       <label class="col-sm-3">Nama File</label>
@@ -287,7 +288,7 @@
                 console.log(dataResult);
                 var resultData = dataResult.data;
                 $.each(resultData,function(index,row){
-                    jQuery("#compose-form input[name=id_detail]").val(row.id_detail);
+                    jQuery("#id_detail").val(row.id_detail);
                     jQuery("#compose .modal-title").html("Response of "+row.keterangan);
                     jQuery("#title-section").html(row.keterangan);
                 })

@@ -40,6 +40,9 @@ class DosenPengajuanController extends Controller
         $this->data['page'] = 'dosen/data/bimbingan/pengajuan_judul/riwayat/'.$id;
         $this->data['title'] = 'Riwayat bimbingan';
         $this->data['load'] = $load;
+        $this->data['lampiran'] = 'dosen/data/bimbingan/pengajuan_judul/riwayat/'.$load->id_bimbingan;
+        $this->data['link_1'] = 'add.lampiran.pengajuan';
+        $this->data['link_2'] = 'add.komentar.pengajuan';
         return view('dosen/bimbingan/detail/index', $this->data);
     }
 
@@ -169,6 +172,7 @@ class DosenPengajuanController extends Controller
 
             $data = [
                 'id_bimbingan'  => $request->id_detail,
+                'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
             ];
@@ -177,7 +181,7 @@ class DosenPengajuanController extends Controller
 
             $id = BimbinganDetail::find($request->id_detail);
 
-            return redirect(url('/dosen/data/bimbingan/pengajuan_judul/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/dosen/data/bimbingan/pengajuan_judul/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

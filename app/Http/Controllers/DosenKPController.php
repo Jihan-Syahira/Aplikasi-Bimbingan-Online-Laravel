@@ -174,6 +174,7 @@ class DosenKPController extends Controller
 
             $data = [
                 'id_bimbingan'  => $request->id_detail,
+                'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
             ];
@@ -183,7 +184,7 @@ class DosenKPController extends Controller
             $id = BimbinganDetail::find($request->id_detail);
             $this->buat_notif('Menambahkan file pada '.strtolower($id->cari_bimbingan->judul), 'mdi-file-upload', 'danger', $id->id_bimbingan);
 
-            return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

@@ -40,6 +40,9 @@ class DosenTAController extends Controller
         $this->data['page'] = 'dosen/data/bimbingan/tugas_akhir/riwayat/'.$id;
         $this->data['title'] = 'Riwayat bimbingan';
         $this->data['load'] = $load;
+        $this->data['lampiran'] = 'dosen/data/bimbingan/tugas_akhir/riwayat/'.$load->id_bimbingan;
+        $this->data['link_1'] = 'add.lampiran.ta';
+        $this->data['link_2'] = 'add.komentar.ta';
         return view('dosen/bimbingan/detail/index', $this->data);
     }
 
@@ -169,6 +172,7 @@ class DosenTAController extends Controller
 
             $data = [
                 'id_bimbingan'  => $request->id_detail,
+                'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
             ];
@@ -177,7 +181,7 @@ class DosenTAController extends Controller
 
             $id = BimbinganDetail::find($request->id_detail);
 
-            return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

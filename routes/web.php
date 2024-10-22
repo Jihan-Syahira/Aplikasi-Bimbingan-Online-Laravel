@@ -132,6 +132,10 @@ Route::GET('/dosen/mahasiswa/riwayat/{id}', [App\Http\Controllers\DosenBimbingan
 Route::POST('/dosen/jadwal/save', [App\Http\Controllers\DosenJadwalController::class, 'store']);
 Route::POST('/dosen/data/bimbingan/kerja_praktik/komentar/save', [App\Http\Controllers\DosenKPController::class, 'store_komentar'])->name('add.komentar.kp');
 Route::POST('/dosen/data/bimbingan/kerja_praktik/upload/save', [App\Http\Controllers\DosenKPController::class, 'upload_file'])->name('add.lampiran.kp');
+Route::POST('/dosen/data/bimbingan/pengajuan_judul/komentar/save', [App\Http\Controllers\DosenPengajuanController::class, 'store_komentar'])->name('add.komentar.pengajuan');
+Route::POST('/dosen/data/bimbingan/pengajuan_judul/upload/save', [App\Http\Controllers\DosenPengajuanController::class, 'upload_file'])->name('add.lampiran.pengajuan');
+Route::POST('/dosen/data/bimbingan/tugas_akhir/komentar/save', [App\Http\Controllers\DosenTAController::class, 'store_komentar'])->name('add.komentar.ta');
+Route::POST('/dosen/data/bimbingan/tugas_akhir/upload/save', [App\Http\Controllers\DosenTAController::class, 'upload_file'])->name('add.lampiran.ta');
 
 //UPDATE
 Route::POST('/dosen/jadwal/update/{id}', [App\Http\Controllers\DosenJadwalController::class, 'update']);
@@ -153,8 +157,12 @@ Route::get('/dosen/data/bimbingan/tugas_akhir/json', [App\Http\Controllers\Dosen
 Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/json', [App\Http\Controllers\DosenTAController::class, 'd_json']);
 
 Route::get('/dosen/data/bimbingan/kerja_praktik/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\DosenKPController::class, 'komentar_json']);
+Route::get('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\DosenPengajuanController::class, 'komentar_json']);
+Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\DosenTAController::class, 'komentar_json']);
 
 Route::get('/dosen/data/bimbingan/kerja_praktik/riwayat/{id}/json/lampiran', [App\Http\Controllers\DosenKPController::class, 'lampiran_json']);
+Route::get('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}/json/lampiran', [App\Http\Controllers\DosenPengajuanController::class, 'lampiran_json']);
+Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/json/lampiran', [App\Http\Controllers\DosenTAController::class, 'lampiran_json']);
 
 Route::get('/dosen/mahasiswa/json', [App\Http\Controllers\DosenBimbinganController::class, 'json']);
 Route::get('/dosen/mahasiswa/riwayat/{id}/json', [App\Http\Controllers\DosenBimbinganController::class, 'd_json']);
@@ -166,6 +174,8 @@ Route::get('/dosen/data/bimbingan/pengajuan_judul/find/{id}', [App\Http\Controll
 Route::get('/dosen/data/bimbingan/tugas_akhir/find/{id}', [App\Http\Controllers\DosenTAController::class, 'find']);
 
 Route::get('/dosen/data/bimbingan/kerja_praktik/riwayat/{id}/find/{od}', [App\Http\Controllers\DosenKPController::class, 'find_detail']);
+Route::get('/dosen/data/bimbingan/pengajuan_judul/riwayat/{id}/find/{od}', [App\Http\Controllers\DosenPengajuanController::class, 'find_detail']);
+Route::get('/dosen/data/bimbingan/tugas_akhir/riwayat/{id}/find/{od}', [App\Http\Controllers\DosenTAController::class, 'find_detail']);
 
 
 //MAHASISWA GET
@@ -195,6 +205,10 @@ Route::POST('/mahasiswa/data/bimbingan/tugas_akhir/detail/{id}/save', [App\Http\
 
 Route::POST('/mahasiswa/data/bimbingan/kerja_praktik/komentar/save', [App\Http\Controllers\MahasiswaKPController::class, 'store_komentar'])->name('add.komentar.kp.mhs');
 Route::POST('/mahasiswa/data/bimbingan/kerja_praktik/upload/save', [App\Http\Controllers\MahasiswaKPController::class, 'upload_file'])->name('add.lampiran.kp.mhs');
+Route::POST('/mahasiswa/data/bimbingan/pengajuan_judul/komentar/save', [App\Http\Controllers\MahasiswaPengajuanController::class, 'store_komentar'])->name('add.komentar.pengajuan.mhs');
+Route::POST('/mahasiswa/data/bimbingan/pengajuan_judul/upload/save', [App\Http\Controllers\MahasiswaPengajuanController::class, 'upload_file'])->name('add.lampiran.pengajuan.mhs');
+Route::POST('/mahasiswa/data/bimbingan/tugas_akhir/komentar/save', [App\Http\Controllers\MahasiswaTAController::class, 'store_komentar'])->name('add.komentar.ta.mhs');
+Route::POST('/mahasiswa/data/bimbingan/tugas_akhir/upload/save', [App\Http\Controllers\MahasiswaTAController::class, 'upload_file'])->name('add.lampiran.ta.mhs');
 
 //UPDATE
 Route::POST('/mahasiswa/jadwal/update/{id}', [App\Http\Controllers\MahasiswaJadwalController::class, 'update']);
@@ -226,8 +240,12 @@ Route::get('/mahasiswa/data/bimbingan/tugas_akhir/json', [App\Http\Controllers\M
 Route::get('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/{id}/json', [App\Http\Controllers\MahasiswaTAController::class, 'd_json']);
 
 Route::get('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\MahasiswaKPController::class, 'komentar_json']);
+Route::get('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\MahasiswaPengajuanController::class, 'komentar_json']);
+Route::get('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/{id}/json/komentar/{od}', [App\Http\Controllers\MahasiswaTAController::class, 'komentar_json']);
 
 Route::get('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/{id}/json/lampiran', [App\Http\Controllers\MahasiswaKPController::class, 'lampiran_json']);
+Route::get('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/{id}/json/lampiran', [App\Http\Controllers\MahasiswaKPController::class, 'lampiran_json']);
+Route::get('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/{id}/json/lampiran', [App\Http\Controllers\MahasiswaKPController::class, 'lampiran_json']);
 
 
 //FIND
@@ -236,7 +254,9 @@ Route::get('/mahasiswa/data/bimbingan/kerja_praktik/find/{id}', [App\Http\Contro
 Route::get('/mahasiswa/data/bimbingan/pengajuan_judul/find/{id}', [App\Http\Controllers\MahasiswaPengajuanController::class, 'find']);
 Route::get('/mahasiswa/data/bimbingan/tugas_akhir/find/{id}', [App\Http\Controllers\MahasiswaTAController::class, 'find']);
 
-Route::get('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/{id}/find/{od}', [App\Http\Controllers\MahasiswaKPController::class, 'find']);
+Route::get('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/{id}/find/{od}', [App\Http\Controllers\MahasiswaKPController::class, 'd_find']);
+Route::get('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/{id}/find/{od}', [App\Http\Controllers\MahasiswaPengajuanController::class, 'd_find']);
+Route::get('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/{id}/find/{od}', [App\Http\Controllers\MahasiswaTAController::class, 'd_find']);
 
 //FILTER
 Route::get('/mahasiswa/jadwal/dosen/json', [App\Http\Controllers\MahasiswaJadwalController::class, 'dosen']);
