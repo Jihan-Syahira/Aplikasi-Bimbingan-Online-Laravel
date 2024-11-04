@@ -8,7 +8,6 @@ use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
 use App\Models\Mahasiswa;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -74,7 +73,7 @@ class PublicController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
         $no = 1;
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->antrian = $no++;
             $year = date('Y', strtotime($row->tanggal));
             $day = date('d', strtotime($row->tanggal));
@@ -98,7 +97,7 @@ class PublicController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
         $no = 1;
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->antrian = $no++;
             $year = date('Y', strtotime($row->tanggal));
             $day = date('d', strtotime($row->tanggal));
@@ -121,7 +120,7 @@ class PublicController extends Controller
             ->orderBy('created_at', 'ASC')
             ->get();
         $no = 1;
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->antrian = $no++;
             $year = date('Y', strtotime($row->tanggal));
             $day = date('d', strtotime($row->tanggal));
@@ -143,7 +142,7 @@ class PublicController extends Controller
             ->orderBy('nama', 'ASC')
             ->get();
 
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $row->email = $row->cari_user->email;
         }
 
@@ -167,5 +166,17 @@ class PublicController extends Controller
         }
 
         return json_encode(array('data' => $events));
+    }
+
+    public function find_jadwal($id)
+    {
+        $data = JadwalDosen::select('*')->where('id', $id)->get();
+
+        foreach ($data as $row) {
+            $jam_start = date('H:i', strtotime($row->mulai));
+            $jam_end = date('H:i', strtotime($row->akhir));
+            $row->waktu = $jam_start.' s/d '.$jam_end;
+        }
+        return json_encode(array('data' => $data));
     }
 }

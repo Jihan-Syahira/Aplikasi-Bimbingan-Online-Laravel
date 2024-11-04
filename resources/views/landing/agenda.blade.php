@@ -67,7 +67,7 @@
         });
 
         calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth'
+            initialView: 'dayGridMonth',
         });
         calendar.render();
     });
@@ -125,7 +125,28 @@
                 events = dataResult.data;
                 calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',
-                    events: events
+                    events: events,
+                    eventClick: function(info) {
+                        $.ajax({
+                            url: "<?=url('agenda/dosen/find/');?>/"+info.event.id,
+                            type: "GET",
+                            cache: false,
+                            dataType: 'json',
+                            success: function (dataResult) { 
+                                console.log(dataResult);
+                                var resultData = dataResult.data;
+                                $.each(resultData,function(index,row){ 
+
+                                    Swal.fire({
+                                    title: 'Jadwal Bimbingan !',
+                                    text: "Dimulai dari pukul "+row.waktu+" ",
+                                    type: 'info'
+                                    })
+
+                                })
+                            }
+                        });
+                    }
                 });
                 calendar.render();
             }
