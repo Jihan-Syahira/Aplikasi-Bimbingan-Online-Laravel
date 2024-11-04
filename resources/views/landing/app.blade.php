@@ -25,6 +25,11 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome-free-6/css/all.css') }}">
+    
+    <!-- SweetAlert 2 -->
+    <script src="{{ asset('assets/dist/sweetalert2/sweetalert2.all.min.js') }}">
+    </script>
+    <link rel="{{ asset('assets/dist/sweetalert2/sweetalert2.min.css') }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body data-aos-easing="ease-in-out" data-aos-duration="1000" data-aos-delay="0">

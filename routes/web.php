@@ -34,6 +34,7 @@ Route::get('/jadwal/pengajuan_judul/json', [App\Http\Controllers\PublicControlle
 Route::get('/jadwal/tugas_akhir/json', [App\Http\Controllers\PublicController::class, 'ta_json']);
 Route::get('/agenda/dosen/json', [App\Http\Controllers\PublicController::class, 'dosen']);
 Route::get('/agenda/cari/{id}', [App\Http\Controllers\PublicController::class, 'cari']);
+Route::get('/agenda/dosen/find/{id}', [App\Http\Controllers\PublicController::class, 'find_jadwal']);
 
 //ADMIN GET
 Route::GET('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
