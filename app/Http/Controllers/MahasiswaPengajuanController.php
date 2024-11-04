@@ -11,7 +11,10 @@ use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
+use App\Models\Komentar;
+use App\Models\Lampiran;
 use App\Models\Mahasiswa;
+use File;
 
 class MahasiswaPengajuanController extends Controller
 {
@@ -249,7 +252,7 @@ class MahasiswaPengajuanController extends Controller
 
             $id = BimbinganDetail::find($request->id_bimbingan);
 
-            return redirect(url('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+            return redirect(url('/mahasiswa/data/bimbingan/pengajuan_judul/riwayat/'.$request->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

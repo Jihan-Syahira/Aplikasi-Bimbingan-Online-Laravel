@@ -11,7 +11,10 @@ use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
 use App\Models\Dosen;
 use App\Models\JadwalDosen;
+use App\Models\Komentar;
+use App\Models\Lampiran;
 use App\Models\Mahasiswa;
+use File;
 
 class MahasiswaTAController extends Controller
 {
@@ -249,7 +252,7 @@ class MahasiswaTAController extends Controller
 
             $id = BimbinganDetail::find($request->id_bimbingan);
 
-            return redirect(url('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
+            return redirect(url('/mahasiswa/data/bimbingan/tugas_akhir/riwayat/'.$request->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

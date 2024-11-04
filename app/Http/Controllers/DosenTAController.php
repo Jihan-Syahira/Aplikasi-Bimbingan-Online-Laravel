@@ -14,6 +14,7 @@ use App\Models\JadwalDosen;
 use App\Models\Komentar;
 use App\Models\Lampiran;
 use App\Models\Mahasiswa;
+use File;
 
 class DosenTAController extends Controller
 {
@@ -149,6 +150,7 @@ class DosenTAController extends Controller
         $id = BimbinganDetail::find($request->id_detail);
 
         Komentar::create($data);
+        $this->buat_notif('Menambahkan Komentar pada '.strtolower($id->cari_bimbingan->judul), 'mdi-comment-multiple', 'primary', $id->id_bimbingan);
 
         return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$request->id_detail))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
@@ -180,6 +182,7 @@ class DosenTAController extends Controller
             ];
 
             Lampiran::create($data);
+            $this->buat_notif('Menambahkan file pada '.strtolower($id->cari_bimbingan->judul), 'mdi-file-upload', 'danger', $id->id_bimbingan);
 
 
             return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$request->id_detail))->with(array('message' => 'Upload Berhasil!','info' => 'info'));

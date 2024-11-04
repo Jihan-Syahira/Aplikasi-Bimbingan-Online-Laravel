@@ -251,7 +251,7 @@ class MahasiswaKPController extends Controller
 
             $id = Bimbingan::find($request->id_bimbingan);
 
-            return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
+            return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$request->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';
