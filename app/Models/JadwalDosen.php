@@ -10,7 +10,7 @@ class JadwalDosen extends Model
     use HasFactory;
     protected $table = 'jadwal_dosen';
     protected $primaryKey = 'id';
-    protected $fillable = ['tanggal','id_dosen'];
+    protected $fillable = ['tanggal','mulai','akhir','id_dosen'];
 
     public function cari_dosen()
     {

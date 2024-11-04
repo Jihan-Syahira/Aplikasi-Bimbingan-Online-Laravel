@@ -88,6 +88,7 @@ class DosenTAController extends Controller
             ->orderBy('tanggal', 'ASC')
             ->get();
 
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);
@@ -149,7 +150,7 @@ class DosenTAController extends Controller
 
         Komentar::create($data);
 
-        return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
+        return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$request->id_detail))->with(array('message' => 'Ubah Berhasil!','info' => 'info'));
     }
 
 
@@ -164,6 +165,7 @@ class DosenTAController extends Controller
     public function upload_file(Request $request)
     {
         $file = $request->file('upload');
+        $id = BimbinganDetail::find($request->id_detail);
         if (isset($file)) {
             $ext = '.' . $file->getClientOriginalExtension();
             $filename =  rand(1001, 9999).'-'.$request->judul . $ext;
@@ -171,7 +173,7 @@ class DosenTAController extends Controller
             $file->storeAs('/', $filename, ['disk' => 'file_upload']);
 
             $data = [
-                'id_bimbingan'  => $request->id_detail,
+                'id_bimbingan'  => $id->id_bimbingan,
                 'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
@@ -179,9 +181,8 @@ class DosenTAController extends Controller
 
             Lampiran::create($data);
 
-            $id = BimbinganDetail::find($request->id_detail);
 
-            return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
+            return redirect(url('/dosen/data/bimbingan/tugas_akhir/riwayat/'.$request->id_detail))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';

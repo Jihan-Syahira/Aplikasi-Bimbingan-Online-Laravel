@@ -1,9 +1,9 @@
 @extends('template.master') @section('content')
 <div class="row">
     <div class="col-lg-12 flex-column pl-4 mb-4 row">
-        <h5 class="">{{$load->cari_bimbingan->judul}}</h5>
+        <h5 class="">{{$load->judul}}</h5>
         <h6 class="text-muted">
-            {{$load->cari_bimbingan->cari_mahasiswa->nama}}
+            {{$load->cari_mahasiswa->nama}}
         </h6>
     </div>
 

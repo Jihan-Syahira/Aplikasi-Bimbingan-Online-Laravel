@@ -55,7 +55,7 @@ class MahasiswaKPController extends Controller
             'keterangan' => $request->keterangan,
             'kategori' => 'KP',
             'status' => $request->status,
-            'id_mahasiswa' => $mahasiswa->id_mahasiswa,
+            'id_mahasiswa' => $mahasiswa->id,
             'id_dosen' => $request->id_dosen
         ];
 
@@ -249,7 +249,7 @@ class MahasiswaKPController extends Controller
 
             Lampiran::create($data);
 
-            $id = BimbinganDetail::find($request->id_bimbingan);
+            $id = Bimbingan::find($request->id_bimbingan);
 
             return redirect(url('/mahasiswa/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 

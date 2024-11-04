@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Hash;
-
 use App\Models\User;
 use App\Models\Bimbingan;
 use App\Models\BimbinganDetail;
@@ -37,11 +36,13 @@ class DosenJadwalController extends Controller
     {
         $dosen = Dosen::select('*')->where('id_user', Auth::user()->id)->first();
         $cek = JadwalDosen::select('*')->where('id_dosen', $dosen->id)->where('tanggal', $request->tanggal)->first();
-        if(!empty($cek)) {
+        if (!empty($cek)) {
             return redirect(route('dosen.jadwal'))->with(array('message' => 'Simpan Berhasil!','info' => 'success'));
         }
         $data = [
             'tanggal' => $request->tanggal,
+            'mulai' => $request->mulai,
+            'akhir' => $request->akhir,
             'id_dosen' => $dosen->id
         ];
 
@@ -56,6 +57,8 @@ class DosenJadwalController extends Controller
         $dosen = Dosen::select('*')->where('id_user', Auth::user()->id)->first();
         $data = [
             'tanggal' => $request->tanggal,
+            'mulai' => $request->mulai,
+            'akhir' => $request->akhir,
             'id_dosen' => $dosen->id
         ];
         $rows = JadwalDosen::find($id);
@@ -81,6 +84,11 @@ class DosenJadwalController extends Controller
             ->orderBy('tanggal', 'ASC')
             ->get();
 
+        foreach ($data as $row) {
+            $jam_start = date('H:i', strtotime($row->mulai));
+            $jam_end = date('H:i', strtotime($row->akhir));
+            $row->waktu = $jam_start.'-'.$jam_end;
+        }
         return Datatables::of($data)
             ->addIndexColumn()
             ->make(true);

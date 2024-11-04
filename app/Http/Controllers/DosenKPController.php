@@ -145,13 +145,14 @@ class DosenKPController extends Controller
             'user_id' => Auth::user()->id,
             'content' => $request->content
         ];
+
         $id = BimbinganDetail::find($request->id_detail);
         $this->buat_notif('Menambahkan Komentar pada '.strtolower($id->cari_bimbingan->judul), 'mdi-comment-multiple', 'primary', $id->id_bimbingan);
 
         Komentar::create($data);
 
 
-        return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Komentar Berhasil!','info' => 'info'));
+        return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$request->id_detail))->with(array('message' => 'Komentar Berhasil!','info' => 'info'));
     }
 
 
@@ -166,6 +167,8 @@ class DosenKPController extends Controller
     public function upload_file(Request $request)
     {
         $file = $request->file('upload');
+
+        $id = BimbinganDetail::find($request->id_detail);
         if (isset($file)) {
             $ext = '.' . $file->getClientOriginalExtension();
             $filename =  rand(1001, 9999).'-'.$request->judul . $ext;
@@ -173,18 +176,16 @@ class DosenKPController extends Controller
             $file->storeAs('/', $filename, ['disk' => 'file_upload']);
 
             $data = [
-                'id_bimbingan'  => $request->id_detail,
+                'id_bimbingan'  => $id->id_bimbingan,
                 'judul' => $request->judul,
                 'user_id' => Auth::user()->id,
                 'file_path' => $filename
             ];
 
             Lampiran::create($data);
-
-            $id = BimbinganDetail::find($request->id_detail);
             $this->buat_notif('Menambahkan file pada '.strtolower($id->cari_bimbingan->judul), 'mdi-file-upload', 'danger', $id->id_bimbingan);
 
-            return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'.$id->id_bimbingan))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
+            return redirect(url('/dosen/data/bimbingan/kerja_praktik/riwayat/'. $request->id_detail))->with(array('message' => 'Upload Berhasil!','info' => 'info'));
 
         } else {
             return '<script>alert("Cek Form!");history.back();</script>';
